@@ -3,30 +3,27 @@ package gg.scala.bedwars.shared
 import gg.scala.bedwars.shared.quickbuy.BedwarsQuickBuyData
 import gg.scala.cgs.common.player.statistic.GameSpecificStatistics
 import gg.scala.cgs.common.player.statistic.value.CgsGameStatistic
-import java.lang.reflect.Type
+import gg.scala.store.controller.DataStoreObjectControllerCache
+import gg.scala.store.storage.type.DataStoreStorageType
+import java.util.*
 
 /**
  * @author GrowlyX
  * @since 12/17/2021
  */
-class BedwarsCgsStatistics
-@JvmOverloads
-constructor(
-    override var gameKills: CgsGameStatistic = CgsGameStatistic(),
-    override var kills: CgsGameStatistic = CgsGameStatistic(),
+class BedwarsCgsStatistics(
+    uniqueId: UUID,
     var finalKills: CgsGameStatistic = CgsGameStatistic(),
     var bedsBroken: CgsGameStatistic = CgsGameStatistic(),
     var gameBedsBroken: CgsGameStatistic = CgsGameStatistic(),
     var gameFinalKills: CgsGameStatistic = CgsGameStatistic(),
-    override var deaths: CgsGameStatistic = CgsGameStatistic(),
-    override var played: CgsGameStatistic = CgsGameStatistic(),
-    override var wins: CgsGameStatistic = CgsGameStatistic(),
-    override var losses: CgsGameStatistic = CgsGameStatistic(),
     val quickBuyData: BedwarsQuickBuyData = BedwarsQuickBuyData()
-) : GameSpecificStatistics()
+) : GameSpecificStatistics(uniqueId)
 {
-    override fun getAbstractType(): Type
-    {
-        return BedwarsCgsStatistics::class.java
-    }
+    override fun getAbstractType() =
+        BedwarsCgsStatistics::class.java
+
+    override fun save() = DataStoreObjectControllerCache
+        .findNotNull<BedwarsCgsStatistics>()
+        .save(this, DataStoreStorageType.MONGO)
 }

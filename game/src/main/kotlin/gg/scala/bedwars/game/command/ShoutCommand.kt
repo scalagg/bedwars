@@ -31,18 +31,17 @@ object ShoutCommand : ScalaCommand()
         message: String
     )
     {
-        val lastShout = this.lastShouts
-            .getIfPresent(player.uniqueId)
+        val lastShout = this.lastShouts.getIfPresent(player.uniqueId)
 
         if (player.hasMetadata("spectator"))
         {
-            player.sendMessage("${CC.RED}You cannot do this right now.")
+            player.sendMessage("${CC.RED}You cannot shout as a spectator!")
             return
         }
 
         if (CgsGameEngine.INSTANCE.gameState != CgsGameState.STARTED)
         {
-            player.sendMessage("${CC.RED}You cannot do this right now.")
+            player.sendMessage("${CC.RED}You cannot shout when the game has not yet started!")
             return
         }
 
@@ -50,7 +49,7 @@ object ShoutCommand : ScalaCommand()
         {
             player.sendMessage("${CC.RED}You must wait ${CC.BOLD}${
                 TimeUtil.formatIntoDetailedString(
-                    (System.currentTimeMillis() - lastShout / 1000L).toInt()
+                    ((System.currentTimeMillis() - lastShout) / 1000L).toInt()
                 )
             }${CC.RED} before shouting again.")
             return

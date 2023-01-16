@@ -6,5 +6,5 @@ package gg.scala.bedwars.game
  */
 class ScalaBedwarsOrchestration
 {
-    val mode = "gg.scala.bedwars.shared.gamemode.BedwarsSoloGameMode"
+    val mode = "gg.scala.bedwars.shared.gamemode.BedwarsDuelsGameMode"
 }

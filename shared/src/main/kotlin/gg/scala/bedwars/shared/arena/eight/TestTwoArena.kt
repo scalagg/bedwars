@@ -1,68 +1,72 @@
 package gg.scala.bedwars.shared.arena.eight
 
 import gg.scala.bedwars.shared.arena.BedwarsArena
-import org.bukkit.Location
 import org.bukkit.Material
 
-object TestTwoArena : BedwarsArena() {
-
+object TestTwoArena : BedwarsArena()
+{
     override val diamondGenerators = mutableListOf(
-        buildSpawnPoint(15.5, 87.0, 77.5),
-        buildSpawnPoint(15.0, 87.0, 59.5),
+        buildSpawnPoint(80105.500, 18.000, 79941.500),
+        buildSpawnPoint(80105.500, 18.000, 79848.500)
     )
 
     override val emeraldGenerators = mutableListOf(
-        buildSpawnPoint(15.0, 90.0, 67.0)
+        buildSpawnPoint(80126.500, 15.000, 79916.500),
+        buildSpawnPoint(80126.500, 15.000, 79874.500),
     )
 
     override val teamShopLocations = mutableMapOf(
-        1 to buildSpawnPoint(13.0, 86.0, 33.0),
-        2 to buildSpawnPoint(17.0, 86.0, 103.0, 180F, 0F)
+        1 to buildSpawnPoint(80127.500, 19.000, 79971.500, -90.0F, 0.0F),
+        2 to buildSpawnPoint(80140.500, 19.000, 79819.500, 90.0F, 0.0F),
     )
 
     override val teamGeneratorLocations = mutableMapOf(
-        1 to buildSpawnPoint(15.0, 86.0, 31.0),
-        2 to buildSpawnPoint(15.0, 86.0, 105.0),
+        1 to buildSpawnPoint(80134.500, 18.500, 79979.500),
+        1 to buildSpawnPoint(80133.500, 18.500, 79811.500),
     )
 
     override val teamItemUpgradeLocations = mutableMapOf(
-        1 to buildSpawnPoint(17.0, 86.0, 33.0),
-        2 to buildSpawnPoint(13.0, 86.0, 103.0, 180F, 0F)
+        1 to buildSpawnPoint(80127.500, 19.000, 79972.500, -90.0F, 0.0F),
+        2 to buildSpawnPoint(80140.500, 19.000, 79818.500, 90.0F, 0.0F),
     )
 
     override val teamBedLocations = mutableMapOf(
-        1 to buildSpawnPoint(15.5, 86.0, 37.5),
-        2 to buildSpawnPoint(15.5, 86.0, 98.5)
+        1 to buildSpawnPoint(80134.500, 19.000, 79962.500),
+        2 to buildSpawnPoint(80133.500, 19.000, 79828.500)
     )
 
     override val teamEnderChestLocations = mutableMapOf(
-        1 to buildSpawnPoint(16.5, 86.0, 34.5),
-        2 to buildSpawnPoint(16.5, 86.0, 102.5)
+        1 to buildSpawnPoint(80137.500, 19.000, 79970.500),
+        2 to buildSpawnPoint(80130.500, 19.000, 79820.500),
     )
 
     override val teamChestLocations = mutableMapOf(
-        1 to buildSpawnPoint(14.5, 86.0, 34.5),
-        2 to buildSpawnPoint(14.5, 86.0, 102.5)
+        1 to buildSpawnPoint(80131.500, 19.000, 79970.500),
+        2 to buildSpawnPoint(80136.500, 19.000, 79820.500),
     )
 
     override val teamSpawnPoints = mutableMapOf(
-        1 to buildSpawnPoint(15.5, 86.0, 34.5),
-        2 to buildSpawnPoint(15.5, 86.0, 102.5, 180F, 0F)
+        1 to buildSpawnPoint(80134.500, 19.000, 79974.500, -180.0F, 0.0F),
+        2 to buildSpawnPoint(80133.500, 19.000, 79816.500, 0.0F, 0.0F)
     )
 
-    override fun getDescription(): String {
+    override fun getDescription(): String
+    {
         return "TEST - Bedwars Arena (two)"
     }
 
-    override fun getId(): String {
+    override fun getId(): String
+    {
         return "bw-test-two"
     }
 
-    override fun getMaterial(): Pair<Material, Int> {
+    override fun getMaterial(): Pair<Material, Int>
+    {
         return Material.GRASS to 0
     }
 
-    override fun getName(): String {
-        return "TEST - 2"
+    override fun getName(): String
+    {
+        return "Tropical (1v1)"
     }
 }

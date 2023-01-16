@@ -1,6 +1,5 @@
 package gg.scala.bedwars.game.death
 
-import gg.scala.bedwars.game.ScalaBedwarsGame
 import gg.scala.bedwars.game.armor.BedwarsArmorService
 import gg.scala.bedwars.game.loadout.BedwarsLoadoutService
 import gg.scala.bedwars.game.tool.BedwarsToolService
@@ -11,7 +10,6 @@ import gg.scala.cgs.common.teams.CgsGameTeamService
 import net.evilblock.cubed.util.CC
 import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer
 import net.kyori.adventure.title.Title
-import net.kyori.adventure.title.TitlePart
 import org.bukkit.entity.Player
 import org.bukkit.metadata.FixedMetadataValue
 import org.bukkit.scheduler.BukkitRunnable

@@ -21,9 +21,11 @@ import net.evilblock.cubed.util.bukkit.ItemBuilder
 import net.evilblock.cubed.util.bukkit.Tasks
 import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer
 import net.kyori.adventure.title.Title
+import net.minecraft.server.v1_8_R3.BlockStainedGlass
 import org.bukkit.Bukkit
 import org.bukkit.Material
 import org.bukkit.Sound
+import org.bukkit.block.BlockState
 import org.bukkit.enchantments.Enchantment
 import org.bukkit.entity.ArmorStand
 import org.bukkit.entity.EntityType
@@ -276,11 +278,7 @@ object BedwarsGameListener : Listener
     {
         if (event.block.type == Material.TNT)
         {
-            event.block.type = Material.AIR
-
-            event.block.world.spawnEntity(
-                event.block.location, EntityType.PRIMED_TNT
-            )
+            event.block.state
         }
     }
 

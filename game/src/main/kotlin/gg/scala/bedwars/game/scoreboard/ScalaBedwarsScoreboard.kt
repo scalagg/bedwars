@@ -10,6 +10,7 @@ import gg.scala.cgs.common.runnable.state.StartingStateRunnable
 import gg.scala.cgs.common.states.CgsGameState
 import gg.scala.cgs.common.teams.CgsGameTeamService
 import gg.scala.lemon.Lemon
+import gg.scala.lemon.LemonConstants
 import net.evilblock.cubed.util.CC
 import net.evilblock.cubed.util.time.TimeUtil
 import org.bukkit.Bukkit
@@ -138,6 +139,6 @@ object ScalaBedwarsScoreboard : CgsGameScoreboardRenderer
         }
 
         lines.add("")
-        lines.add("${CC.GRAY}www.glade.gg       ${CC.GRAY}")
+        lines.add("${CC.GRAY}${LemonConstants.WEB_LINK}")
     }
 }

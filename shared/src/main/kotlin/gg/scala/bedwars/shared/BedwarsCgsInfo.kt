@@ -1,5 +1,6 @@
 package gg.scala.bedwars.shared
 
+import gg.scala.bedwars.shared.gamemode.BedwarsDuelsGameMode
 import gg.scala.cgs.common.information.CgsGameGeneralInfo
 import gg.scala.bedwars.shared.gamemode.BedwarsDuosGameMode
 import gg.scala.bedwars.shared.gamemode.BedwarsSoloGameMode
@@ -12,9 +13,10 @@ import gg.scala.bedwars.shared.gamemode.BedwarsFoursGameMode
  */
 object BedwarsCgsInfo : CgsGameGeneralInfo(
     "BedWars", 0.04F, 2,
-    6, BedwarsCgsAwards, false,
+    6, BedwarsCgsAwards, false, false,
     false, false, true,
     true, listOf(
+        BedwarsDuelsGameMode,
         BedwarsSoloGameMode,
         BedwarsDuosGameMode,
         BedwarsTriosGameMode,
