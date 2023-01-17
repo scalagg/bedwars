@@ -572,11 +572,11 @@ object BedwarsGameListener : Listener
                         event.player.inventory.removeItem(event.itemStack)
                         return@ctx
                     }
+
                     event.itemStack.amount = event.itemStack.amount - 1
                     event.player.updateInventory()
-
                 },
-                3L
+                1L
             )
     }
 
