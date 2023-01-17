@@ -16,7 +16,6 @@ import gg.scala.commons.annotations.Listeners
 import gg.scala.flavor.inject.Inject
 import net.evilblock.cubed.util.CC
 import net.evilblock.cubed.util.bukkit.Constants
-import net.evilblock.cubed.util.bukkit.ItemBuilder
 import net.evilblock.cubed.util.bukkit.Tasks
 import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer
 import net.kyori.adventure.title.Title
@@ -41,7 +40,6 @@ import org.bukkit.event.inventory.InventoryClickEvent
 import org.bukkit.event.inventory.InventoryMoveItemEvent
 import org.bukkit.event.inventory.InventoryType
 import org.bukkit.event.player.*
-import org.bukkit.inventory.ItemStack
 import org.bukkit.metadata.FixedMetadataValue
 import org.bukkit.util.Vector
 import java.lang.reflect.Field
@@ -109,7 +107,8 @@ object BedwarsGameListener : Listener
 
         if (event.destroyer != null)
         {
-            val stats = (CgsGameEngine.INSTANCE.getStatistics(CgsPlayerHandler.find(event.destroyer)!!) as BedwarsCgsStatistics)
+            val stats =
+                (CgsGameEngine.INSTANCE.getStatistics(CgsPlayerHandler.find(event.destroyer)!!) as BedwarsCgsStatistics)
 
             stats.bedsBroken++
             stats.gameBedsBroken++
@@ -315,9 +314,12 @@ object BedwarsGameListener : Listener
     }
 
     @EventHandler
-    fun onMove(event: PlayerMoveEvent) {
-        if (event.to.y < 0) {
-            if (!event.player.hasMetadata("respawning")) {
+    fun onMove(event: PlayerMoveEvent)
+    {
+        if (event.to.y < 0)
+        {
+            if (!event.player.hasMetadata("respawning"))
+            {
                 onDeath(PlayerDeathEvent(event.player, event.player.inventory.contents.toList(), 0, null))
             }
         }
@@ -451,10 +453,12 @@ object BedwarsGameListener : Listener
     }
 
     @EventHandler
-    fun onProjectileLand(event: ProjectileHitEvent) {
+    fun onProjectileLand(event: ProjectileHitEvent)
+    {
         if (event.entity is Egg)
         {
-            val silverfish = event.entity.location.world.spawnEntity(event.entity.location, EntityType.SILVERFISH) as Silverfish
+            val silverfish =
+                event.entity.location.world.spawnEntity(event.entity.location, EntityType.SILVERFISH) as Silverfish
             silverfish.isCustomNameVisible = true
             silverfish.customName = "${(event.entity.shooter as Player).displayName}'s Bedbug"
             // add custom AI here for silverfish to not target team
@@ -554,9 +558,9 @@ object BedwarsGameListener : Listener
         try
         {
             val handle: Any = craftFireballHandle.invoke(fireball)
-            fieldFireballDirX.set(handle, direction.getX() * 0.10)
-            fieldFireballDirY.set(handle, direction.getY() * 0.10)
-            fieldFireballDirZ.set(handle, direction.getZ() * 0.10)
+            fieldFireballDirX.set(handle, direction.x * 0.10)
+            fieldFireballDirY.set(handle, direction.y * 0.10)
+            fieldFireballDirZ.set(handle, direction.z * 0.10)
         } catch (e: IllegalAccessException)
         {
             e.printStackTrace()
@@ -568,9 +572,24 @@ object BedwarsGameListener : Listener
     }
 
     @EventHandler
-    fun onDamage(event: PlayerBucketEmptyEvent)
+    fun onDamage(event: PlayerBucketEvent)
     {
-        event.player.itemInHand = ItemStack(Material.AIR)
+        /* Remove empty bucket */
+        Bukkit.getScheduler()
+            .runTaskLater(
+                plugin,
+                ctx@{
+                    if (event.itemStack.amount - 1 <= 0)
+                    {
+                        event.player.inventory.removeItem(event.itemStack)
+                        return@ctx
+                    }
+                    event.itemStack.amount = event.itemStack.amount - 1
+                    event.player.updateInventory()
+
+                },
+                3L
+            )
     }
 
     @EventHandler
@@ -579,7 +598,7 @@ object BedwarsGameListener : Listener
         if (
             event.cause == EntityDamageEvent.DamageCause.ENTITY_EXPLOSION ||
             event.cause == EntityDamageEvent.DamageCause.BLOCK_EXPLOSION
-            )
+        )
         {
             event.damage = 1.0
         }
