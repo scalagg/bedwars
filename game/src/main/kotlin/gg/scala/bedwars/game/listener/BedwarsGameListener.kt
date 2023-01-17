@@ -41,6 +41,7 @@ import org.bukkit.event.inventory.InventoryClickEvent
 import org.bukkit.event.inventory.InventoryMoveItemEvent
 import org.bukkit.event.inventory.InventoryType
 import org.bukkit.event.player.*
+import org.bukkit.inventory.ItemStack
 import org.bukkit.metadata.FixedMetadataValue
 import org.bukkit.util.Vector
 import java.lang.reflect.Field
@@ -564,6 +565,12 @@ object BedwarsGameListener : Listener
             e.printStackTrace()
         }
         return fireball
+    }
+
+    @EventHandler
+    fun onDamage(event: PlayerBucketEmptyEvent)
+    {
+        event.player.itemInHand = ItemStack(Material.AIR)
     }
 
     @EventHandler
