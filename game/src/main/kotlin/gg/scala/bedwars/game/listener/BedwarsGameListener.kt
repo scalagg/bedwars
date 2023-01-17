@@ -491,14 +491,14 @@ object BedwarsGameListener : Listener
 
             val eye = event.player.eyeLocation
             val location = eye.add(
-                eye.direction.multiply(1.2)
+                eye.direction.multiply(-1.7)
             )
 
             val fireball = location.world
                 .spawnEntity(location, EntityType.FIREBALL) as Fireball
 
             fireball.velocity = location
-                .direction.normalize().multiply(0.80)
+                .direction.normalize().multiply(0.55)
 
             fireball.shooter = event.player
 
