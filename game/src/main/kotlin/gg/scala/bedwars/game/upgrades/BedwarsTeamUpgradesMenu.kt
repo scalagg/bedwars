@@ -12,6 +12,7 @@ import net.evilblock.cubed.util.bukkit.Constants
 import net.evilblock.cubed.util.bukkit.ItemBuilder
 import org.bukkit.Bukkit
 import org.bukkit.Material
+import org.bukkit.Sound
 import org.bukkit.entity.Player
 import org.bukkit.inventory.ItemFlag
 
@@ -224,6 +225,7 @@ class BedwarsTeamUpgradesMenu : Menu(
                     player.sendMessage("${CC.GREEN}You purchased ${CC.YELLOW}${
                         upgrade.display
                     }${CC.GREEN} tier ${CC.GOLD}${tier + 1}${CC.GREEN}.")
+                    player.playSound(player.location, Sound.NOTE_PLING, 0.5F, 1.0F)
                 }
         }
 

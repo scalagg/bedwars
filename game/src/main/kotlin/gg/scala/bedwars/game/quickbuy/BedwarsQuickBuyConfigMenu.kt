@@ -38,6 +38,8 @@ class BedwarsQuickBuyConfigMenu(
             28, 29, 30, 31, 32, 33, 34
         )
 
+    override fun getMaxItemsPerPage(player: Player) = getAllPagesButtonSlots().size
+
     override fun size(buttons: Map<Int, Button>) = 45
 
     override fun onClose(player: Player, manualClose: Boolean)
