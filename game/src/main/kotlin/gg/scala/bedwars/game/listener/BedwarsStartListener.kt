@@ -84,6 +84,8 @@ object BedwarsStartListener : Listener
             .forEach {
                 if (it.participants.size > 0)
                 {
+                    println(it.id)
+
                     BedwarsTeamItemGenerator(
                         arena.teamGeneratorLocations[it.id]!!, it
                     )

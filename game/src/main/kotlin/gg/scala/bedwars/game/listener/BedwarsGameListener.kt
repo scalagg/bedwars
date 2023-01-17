@@ -55,9 +55,9 @@ object BedwarsGameListener : Listener
     @EventHandler
     fun onQuit(event: PlayerQuitEvent)
     {
-        val team = (CgsGameTeamService.getTeamOf(event.player) as BedwarsCgsGameTeam)
+        val team = (CgsGameTeamService.getTeamOf(event.player) as BedwarsCgsGameTeam?)
 
-        if (team.bedDestroyed)
+        if (team != null && team.bedDestroyed)
         {
             CgsGameDisqualificationHandler.disqualifyPlayer(event.player)
         }

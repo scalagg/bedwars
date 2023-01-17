@@ -95,7 +95,7 @@ object ScalaBedwarsScoreboard : CgsGameScoreboardRenderer
                 .getStatistics(cgsGamePlayer)
 
             val team = CgsGameTeamService
-                .getTeamOf(player)!! as BedwarsCgsGameTeam
+                .getTeamOf(player) as BedwarsCgsGameTeam?
 
             lines.add("${
                 BedwarsItemGeneratorTierIncrementer
