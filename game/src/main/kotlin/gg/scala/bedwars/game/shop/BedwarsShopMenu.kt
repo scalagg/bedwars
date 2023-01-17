@@ -323,6 +323,7 @@ class BedwarsShopMenu : PaginatedMenu()
                                     player.sendMessage(
                                         "${CC.GREEN}You purchased ${CC.SEC}${selected.name}${CC.GREEN}!"
                                     )
+                                    player.playSound(player.location, Sound.NOTE_PLING, 0.5F, 1.0F)
 
                                     selected.price.first.removeFrom
                                         .invoke(player, selected.price.second)

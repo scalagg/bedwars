@@ -59,11 +59,11 @@ object BedwarsStartListener : Listener
                     )
                     .compose()
                     .override(5000) {
-                        it.team()!!.id == team.id && !CgsGameEngine
+                        it.team()?.id == team.id && !CgsGameEngine
                             .INSTANCE.gameMode.isSoloGame()
                     }
                     .allowOnlyIf {
-                        it.team()!!.id == team.id && !CgsGameEngine
+                        it.team()?.id == team.id && !CgsGameEngine
                             .INSTANCE.gameMode.isSoloGame()
                     }
                     .monitor()

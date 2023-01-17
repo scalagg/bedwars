@@ -72,6 +72,11 @@ object BedwarsGameListener : Listener
         {
             return
         }
+
+        BedwarsRespawnRunnable(event.participant)
+            .runTaskTimer(
+                this.plugin, 0L, 20L
+            )
     }
 
     @EventHandler
@@ -272,13 +277,25 @@ object BedwarsGameListener : Listener
     }
 
     @EventHandler
+    fun onFoodLevel(
+        event: FoodLevelChangeEvent
+    )
+    {
+        event.isCancelled = true
+    }
+
+    @EventHandler
     fun onTntIgnite(
         event: BlockPlaceEvent
     )
     {
         if (event.block.type == Material.TNT)
         {
-            event.block.state
+            event.block.type = Material.AIR
+            event.block.world.spawnEntity(
+                event.block.location,
+                EntityType.PRIMED_TNT
+            )
         }
     }
 

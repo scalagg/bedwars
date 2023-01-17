@@ -24,6 +24,6 @@ object BedwarsDuelsGameMode : CgsGameMode
         TestTwoArena
     )
 
-    override fun getTeamSize() = 2 // team size
+    override fun getTeamSize() = 1 // team size
     override fun getMaxTeams() = 2 // max teams
 }

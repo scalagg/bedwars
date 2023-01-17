@@ -23,7 +23,12 @@ object ScalaBedwarsNametagAdapter : CgsGameNametagAdapter
     ): NametagInfo
     {
         val targetPlayer = Bukkit.getPlayer(viewer.uniqueId)
-        val team = (CgsGameTeamService.getTeamOf(targetPlayer) as BedwarsCgsGameTeam)
+        val team = (CgsGameTeamService.getTeamOf(targetPlayer) as BedwarsCgsGameTeam?)
+
+        if (team == null || targetPlayer.hasMetadata("spectator"))
+        {
+            return NametagProvider.createNametag(CC.GRAY, "", "z")
+        }
 
         return NametagProvider.createNametag(
             "${team.color}${CC.BOLD}${

@@ -27,7 +27,6 @@ enum class BedwarsPickaxeType(
     );
 
     fun previous() : BedwarsPickaxeType? {
-        Bukkit.broadcastMessage(this.name)
         if (this == WOOD) return null
         return values()[this.ordinal - 1]
     }

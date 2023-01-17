@@ -53,14 +53,11 @@ object ToolShopItemContextual : BedwarsShopItemContextualProvider
         when (val tool = mappings[item.name]) {
             is BedwarsPickaxeType -> {
 
-                Bukkit.broadcastMessage(tool.name)
                 val pickaxe = BedwarsToolService.pickaxes[player.uniqueId] ?: return tool == BedwarsPickaxeType.WOOD
                 return (pickaxe.next() ?: false) == tool
             }
 
             is BedwarsAxeType -> {
-
-                Bukkit.broadcastMessage(tool.name)
 
                 val axe = BedwarsToolService.axes[player.uniqueId] ?: return tool == BedwarsAxeType.WOOD
                 return (axe.next() ?: false) == tool
