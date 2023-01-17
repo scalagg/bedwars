@@ -16,12 +16,10 @@ abstract class BedwarsArena : CgsGameArena
 
     override fun getPreLobbyLocation() = Location(
         Bukkit.getWorld(getBukkitWorldName()),
-        0.5, 150.0, 0.5
+        80098.500, 56.500, 79888.500
     )
 
-    override fun getSpectatorLocation() = Location(
-        Bukkit.getWorld(getBukkitWorldName()), 0.5, Bukkit.getWorld(getBukkitWorldName()).getHighestBlockYAt(0, 0) + 15.0, 0.5
-    )
+    override fun getSpectatorLocation() = getPreLobbyLocation()
 
     fun buildSpawnPoint(x: Double, y: Double, z: Double) : Location {
         return Location(Bukkit.getWorld(getBukkitWorldName()), x, y, z)

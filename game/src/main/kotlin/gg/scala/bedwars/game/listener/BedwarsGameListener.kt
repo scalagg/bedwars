@@ -28,6 +28,7 @@ import org.bukkit.Sound
 import org.bukkit.block.BlockState
 import org.bukkit.enchantments.Enchantment
 import org.bukkit.entity.ArmorStand
+import org.bukkit.entity.Egg
 import org.bukkit.entity.EntityType
 import org.bukkit.entity.Fireball
 import org.bukkit.entity.Player
@@ -448,10 +449,13 @@ object BedwarsGameListener : Listener
 
     @EventHandler
     fun onProjectileLand(event: ProjectileHitEvent) {
-        val silverfish = event.entity.location.world.spawnEntity(event.entity.location, EntityType.SILVERFISH) as Silverfish
-        silverfish.isCustomNameVisible = true
-        silverfish.customName = "${(event.entity.shooter as Player).displayName}'s Bedbug"
-        // add custom AI here for silverfish to not target team
+        if (event.entity is Egg)
+        {
+            val silverfish = event.entity.location.world.spawnEntity(event.entity.location, EntityType.SILVERFISH) as Silverfish
+            silverfish.isCustomNameVisible = true
+            silverfish.customName = "${(event.entity.shooter as Player).displayName}'s Bedbug"
+            // add custom AI here for silverfish to not target team
+        }
     }
 
     private val lastThrown = mutableMapOf<UUID, Long>()
@@ -515,6 +519,11 @@ object BedwarsGameListener : Listener
         }
 
         event.drops.removeIf {
+            if (it == null)
+            {
+                return@removeIf true
+            }
+
             it.type !in BedwarsShopCurrency.values().map { currency ->
                 currency.material
             }
