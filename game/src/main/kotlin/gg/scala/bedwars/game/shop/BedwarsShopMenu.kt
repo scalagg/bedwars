@@ -142,6 +142,7 @@ class BedwarsShopMenu : PaginatedMenu()
                                         }
                                     } to purchase this item!"
                                 )
+                                player.playSound(player.location, Sound.NOTE_BASS, 0.5F, 0.5F)
                                 return@toButton
                             }
 
@@ -312,6 +313,7 @@ class BedwarsShopMenu : PaginatedMenu()
                                                 }
                                             } to purchase this item!"
                                         )
+                                        player.playSound(player.location, Sound.NOTE_BASS, 0.5F, 0.5F)
                                         return@toButton
                                     }
 

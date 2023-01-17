@@ -6,6 +6,7 @@ import gg.scala.bedwars.game.loadout.BedwarsLoadoutService
 import gg.scala.bedwars.game.shop.BedwarsShopItem
 import gg.scala.bedwars.game.shop.contextual.BedwarsShopItemContextualProvider
 import net.evilblock.cubed.util.CC
+import org.bukkit.Sound
 import org.bukkit.entity.Player
 
 /**
@@ -48,6 +49,7 @@ object ArmorShopItemContextual : BedwarsShopItemContextualProvider
             player.sendMessage(
                 "${CC.RED}You already own this armor!"
             )
+            player.playSound(player.location, Sound.NOTE_BASS, 0.5F, 0.5F)
             return false
         }
 
@@ -62,6 +64,7 @@ object ArmorShopItemContextual : BedwarsShopItemContextualProvider
             player.sendMessage(
                 "${CC.RED}You already own better armor!"
             )
+            player.playSound(player.location, Sound.NOTE_BASS, 0.5F, 0.5F)
             return false
         }
 

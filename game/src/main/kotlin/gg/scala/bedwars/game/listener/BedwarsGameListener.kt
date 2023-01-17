@@ -11,7 +11,6 @@ import gg.scala.bedwars.shared.team.BedwarsCgsGameTeam
 import gg.scala.cgs.common.CgsGameEngine
 import gg.scala.cgs.common.player.handler.CgsGameDisqualificationHandler
 import gg.scala.cgs.common.player.handler.CgsPlayerHandler
-import gg.scala.cgs.common.player.handler.CgsSpectatorHandler
 import gg.scala.cgs.common.teams.CgsGameTeamService
 import gg.scala.commons.annotations.Listeners
 import gg.scala.flavor.inject.Inject
@@ -21,11 +20,9 @@ import net.evilblock.cubed.util.bukkit.ItemBuilder
 import net.evilblock.cubed.util.bukkit.Tasks
 import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer
 import net.kyori.adventure.title.Title
-import net.minecraft.server.v1_8_R3.BlockStainedGlass
 import org.bukkit.Bukkit
 import org.bukkit.Material
 import org.bukkit.Sound
-import org.bukkit.block.BlockState
 import org.bukkit.enchantments.Enchantment
 import org.bukkit.entity.ArmorStand
 import org.bukkit.entity.Egg
@@ -36,6 +33,7 @@ import org.bukkit.entity.Silverfish
 import org.bukkit.event.EventHandler
 import org.bukkit.event.EventPriority
 import org.bukkit.event.Listener
+import org.bukkit.event.block.Action
 import org.bukkit.event.block.BlockBreakEvent
 import org.bukkit.event.block.BlockPlaceEvent
 import org.bukkit.event.entity.*
@@ -44,6 +42,10 @@ import org.bukkit.event.inventory.InventoryMoveItemEvent
 import org.bukkit.event.inventory.InventoryType
 import org.bukkit.event.player.*
 import org.bukkit.metadata.FixedMetadataValue
+import org.bukkit.util.Vector
+import java.lang.reflect.Field
+import java.lang.reflect.InvocationTargetException
+import java.lang.reflect.Method
 import java.util.*
 
 
@@ -460,19 +462,14 @@ object BedwarsGameListener : Listener
 
     private val lastThrown = mutableMapOf<UUID, Long>()
 
-    @EventHandler
-    fun onFireball(
-        event: PlayerInteractEvent
-    )
+    @EventHandler(priority = EventPriority.LOWEST)
+    fun spawnFireball(event: PlayerInteractEvent)
     {
-        if (
-            event.item != null &&
-            event.item.type == Material.FIREBALL &&
-            event.action.name.contains("RIGHT")
-        )
-        {
-            event.isCancelled = true
+        val p = event.player
+        val a: Action = event.action
 
+        if ((a === Action.RIGHT_CLICK_AIR || a === Action.RIGHT_CLICK_BLOCK) && p.itemInHand.type == Material.FIREBALL)
+        {
             val lastThrown = lastThrown[event.player.uniqueId]
 
             if (
@@ -483,29 +480,104 @@ object BedwarsGameListener : Listener
                 return
             }
 
-            event.player.inventory
-                .remove(
-                    ItemBuilder.of(Material.FIREBALL).amount(1).build()
-                )
-            event.player.updateInventory()
-
-            val eye = event.player.eyeLocation
-            val location = eye.add(
-                eye.direction.multiply(-1.7)
-            )
-
-            val fireball = location.world
-                .spawnEntity(location, EntityType.FIREBALL) as Fireball
-
-            fireball.velocity = location
-                .direction.normalize().multiply(0.55)
-
-            fireball.shooter = event.player
+            event.isCancelled = true
+            p.setMetadata("uwu", FixedMetadataValue(plugin, "yes"))
+            val direction = p.eyeLocation.direction
+            val f = p.launchProjectile(Fireball::class.java) as Fireball
+            p.removeMetadata("uwu", plugin)
+            setDirection(f, direction)
+            f.velocity = f.direction.multiply(5)
+            f.setIsIncendiary(false)
 
             this.lastThrown[event.player.uniqueId] =
                 System.currentTimeMillis()
         }
     }
+
+    @EventHandler(priority = EventPriority.HIGHEST)
+    fun onFireball(event: ProjectileLaunchEvent)
+    {
+        if (event.entity.shooter is Player)
+        {
+            val p = event.entity.shooter as Player
+
+            if (p.itemInHand.type == Material.FIREBALL)
+            {
+                if (p.hasMetadata("uwu"))
+                {
+                    return
+                }
+
+                event.isCancelled = true
+            }
+        }
+    }
+
+    lateinit var fieldFireballDirX: Field
+    lateinit var fieldFireballDirY: Field
+    lateinit var fieldFireballDirZ: Field
+
+    lateinit var craftFireballHandle: Method
+
+    init
+    {
+        val version = Bukkit.getServer().javaClass.getPackage().name.replace(".", ",").split(",".toRegex())
+            .dropLastWhile { it.isEmpty() }
+            .toTypedArray()[3] + "."
+        val nmsFireball = "net.minecraft.server." + version + "EntityFireball"
+        val craftFireball = "org.bukkit.craftbukkit." + version + "entity.CraftFireball"
+        try
+        {
+            val fireballClass = Class.forName(nmsFireball)
+
+            //should be accessible by default.
+            fieldFireballDirX = fireballClass.getDeclaredField("dirX")
+            fieldFireballDirY = fireballClass.getDeclaredField("dirY")
+            fieldFireballDirZ = fireballClass.getDeclaredField("dirZ")
+            craftFireballHandle = Class.forName(craftFireball).getDeclaredMethod("getHandle")
+        } catch (e: ClassNotFoundException)
+        {
+            e.printStackTrace()
+            Bukkit.shutdown()
+        } catch (e: NoSuchFieldException)
+        {
+            e.printStackTrace()
+        } catch (e: NoSuchMethodException)
+        {
+            e.printStackTrace()
+        }
+    }
+
+    fun setDirection(fireball: Fireball?, direction: Vector): Fireball?
+    {
+        try
+        {
+            val handle: Any = craftFireballHandle.invoke(fireball)
+            fieldFireballDirX.set(handle, direction.getX() * 0.10)
+            fieldFireballDirY.set(handle, direction.getY() * 0.10)
+            fieldFireballDirZ.set(handle, direction.getZ() * 0.10)
+        } catch (e: IllegalAccessException)
+        {
+            e.printStackTrace()
+        } catch (e: InvocationTargetException)
+        {
+            e.printStackTrace()
+        }
+        return fireball
+    }
+
+    @EventHandler
+    fun onDamage(event: EntityDamageEvent)
+    {
+        if (
+            event.cause == EntityDamageEvent.DamageCause.ENTITY_EXPLOSION ||
+            event.cause == EntityDamageEvent.DamageCause.BLOCK_EXPLOSION
+            )
+        {
+            event.damage = 1.0
+        }
+    }
+
 
     @EventHandler
     fun onDeath(event: PlayerDeathEvent)

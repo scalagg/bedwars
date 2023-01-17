@@ -168,6 +168,7 @@ class BedwarsTeamUpgradesMenu : Menu(
                     if (tier == upgrade.maxLevel)
                     {
                         player.sendMessage("${CC.RED}You cannot upgrade this any further!")
+                        player.playSound(player.location, Sound.NOTE_BASS, 0.5F, 0.5F)
                         return@toButton
                     }
 
@@ -191,6 +192,7 @@ class BedwarsTeamUpgradesMenu : Menu(
                                     if (price - diamonds == 1) "" else "s"
                                 } to purchase this item!"
                             )
+                            player.playSound(player.location, Sound.NOTE_BASS, 0.5F, 0.5F)
                             return@toButton
                         }
                     } else
@@ -202,6 +204,7 @@ class BedwarsTeamUpgradesMenu : Menu(
                                     if (price - diamonds == 1) "" else "s"
                                 } to purchase this item!"
                             )
+                            player.playSound(player.location, Sound.NOTE_BASS, 0.5F, 0.5F)
                             return@toButton
                         }
                     }
