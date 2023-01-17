@@ -13,6 +13,11 @@ object TestEightArena : BedwarsArena() {
         buildSpawnPoint(0.0, 100.0, -5.0),
     )
 
+    override fun getBukkitWorldName(): String
+    {
+        TODO("Not yet implemented")
+    }
+    
     override val emeraldGenerators = mutableListOf(
         buildSpawnPoint(1.0, 100.0, 1.0),
         buildSpawnPoint(-1.0, 100.0, 1.0),

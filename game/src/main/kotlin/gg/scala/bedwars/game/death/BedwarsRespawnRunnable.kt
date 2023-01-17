@@ -10,6 +10,7 @@ import gg.scala.cgs.common.teams.CgsGameTeamService
 import net.evilblock.cubed.util.CC
 import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer
 import net.kyori.adventure.title.Title
+import org.bukkit.Sound
 import org.bukkit.entity.Player
 import org.bukkit.metadata.FixedMetadataValue
 import org.bukkit.scheduler.BukkitRunnable
@@ -49,7 +50,7 @@ class BedwarsRespawnRunnable(
                 CgsSpectatorHandler.setSpectator(this.player)
 
                 this.player.teleport(
-                    CgsGameEngine.INSTANCE.gameArena.getPreLobbyLocation()
+                    CgsGameEngine.INSTANCE.gameArena!!.getPreLobbyLocation()
                 )
             }
             5, 4, 3, 2, 1 ->
@@ -75,6 +76,7 @@ class BedwarsRespawnRunnable(
                 this.player.sendMessage(
                     "${CC.SEC}You will respawn in ${CC.GREEN}$tick${CC.SEC} seconds."
                 )
+                this.player.playSound(player.location, Sound.NOTE_STICKS, 1.0f, 1.0f)
             }
             0 ->
             {
@@ -116,6 +118,7 @@ class BedwarsRespawnRunnable(
 
                 player.removeMetadata("respawning", CgsGameEngine.INSTANCE.plugin)
                 this.player.sendMessage("${CC.GREEN}You have respawned!")
+                this.player.playSound(player.location, Sound.NOTE_PLING, 1.0f, 1.0f)
 
                 this.cancel()
             }

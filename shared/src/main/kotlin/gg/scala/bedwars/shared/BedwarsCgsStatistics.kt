@@ -11,15 +11,15 @@ import java.util.*
  * @author GrowlyX
  * @since 12/17/2021
  */
-class BedwarsCgsStatistics(
-    uniqueId: UUID,
-    var finalKills: CgsGameStatistic = CgsGameStatistic(),
-    var bedsBroken: CgsGameStatistic = CgsGameStatistic(),
-    var gameBedsBroken: CgsGameStatistic = CgsGameStatistic(),
-    var gameFinalKills: CgsGameStatistic = CgsGameStatistic(),
-    val quickBuyData: BedwarsQuickBuyData = BedwarsQuickBuyData()
-) : GameSpecificStatistics(uniqueId)
+class BedwarsCgsStatistics(uniqueId: UUID) : GameSpecificStatistics(uniqueId)
 {
+    var finalKills = CgsGameStatistic()
+    var bedsBroken = CgsGameStatistic()
+    var gameBedsBroken = CgsGameStatistic()
+    var gameFinalKills = CgsGameStatistic()
+
+    val quickBuyData = BedwarsQuickBuyData()
+
     override fun getAbstractType() =
         BedwarsCgsStatistics::class.java
 

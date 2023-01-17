@@ -31,7 +31,7 @@ object BedwarsItemGeneratorTierIncrementer : BukkitRunnable()
     )
 
     private val colors = mapOf(
-        BedwarsDiamondItemGenerator::class to CC.D_AQUA,
+        BedwarsDiamondItemGenerator::class to CC.AQUA,
         BedwarsEmeraldItemGenerator::class to CC.D_GREEN
     )
 

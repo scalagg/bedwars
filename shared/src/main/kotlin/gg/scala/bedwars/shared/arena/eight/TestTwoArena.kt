@@ -6,13 +6,13 @@ import org.bukkit.Material
 object TestTwoArena : BedwarsArena()
 {
     override val diamondGenerators = mutableListOf(
-        buildSpawnPoint(80105.500, 18.000, 79941.500),
-        buildSpawnPoint(80105.500, 18.000, 79848.500)
+        buildSpawnPoint(80105.500, 18.000 + 5, 79941.500),
+        buildSpawnPoint(80105.500, 18.000 + 5, 79848.500)
     )
 
     override val emeraldGenerators = mutableListOf(
-        buildSpawnPoint(80126.500, 15.000, 79916.500),
-        buildSpawnPoint(80126.500, 15.000, 79874.500),
+        buildSpawnPoint(80126.500, 15.000 + 5, 79916.500),
+        buildSpawnPoint(80126.500, 15.000 + 5, 79874.500),
     )
 
     override val teamShopLocations = mutableMapOf(
@@ -21,8 +21,8 @@ object TestTwoArena : BedwarsArena()
     )
 
     override val teamGeneratorLocations = mutableMapOf(
-        1 to buildSpawnPoint(80134.500, 18.500, 79979.500),
-        1 to buildSpawnPoint(80133.500, 18.500, 79811.500),
+        1 to buildSpawnPoint(80134.500, 18.500 + 3, 79979.500),
+        1 to buildSpawnPoint(80133.500, 18.500 + 3, 79811.500),
     )
 
     override val teamItemUpgradeLocations = mutableMapOf(
@@ -57,16 +57,18 @@ object TestTwoArena : BedwarsArena()
 
     override fun getId(): String
     {
-        return "bw-test-two"
+        return "tropical"
     }
 
     override fun getMaterial(): Pair<Material, Int>
     {
-        return Material.GRASS to 0
+        return Material.SAPLING to 0
     }
+
+    override fun getBukkitWorldName() = "tropical"
 
     override fun getName(): String
     {
-        return "Tropical (1v1)"
+        return "Tropical"
     }
 }

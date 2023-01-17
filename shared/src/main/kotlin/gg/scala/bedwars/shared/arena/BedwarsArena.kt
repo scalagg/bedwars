@@ -4,20 +4,18 @@ import gg.scala.cgs.common.information.arena.CgsGameArena
 import gg.scala.cgs.common.information.arena.slime.CgsSlimeGameArena
 import org.bukkit.Bukkit
 import org.bukkit.Location
-import org.bukkit.Material
-import org.bukkit.block.BlockFace
 import java.nio.file.Path
 
 /**
  * @author GrowlyX
  * @since 12/3/2021
  */
-abstract class BedwarsArena : CgsSlimeGameArena()
+abstract class BedwarsArena : CgsGameArena
 {
     override fun getDirectory(): Path? = null
 
     override fun getPreLobbyLocation() = Location(
-        Bukkit.getWorld("world"),
+        Bukkit.getWorld(getBukkitWorldName()),
         0.5, 150.0, 0.5
     )
 

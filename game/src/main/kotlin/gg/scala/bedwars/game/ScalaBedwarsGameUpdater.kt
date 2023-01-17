@@ -21,7 +21,7 @@ object ScalaBedwarsGameUpdater
         CloudSyncDiscoveryService
             .discoverable.assets
             .apply {
-                add("gg.scala.bedwars:game:bedwars-game")
+                add("gg.scala.bedwars:game:scala-bedwars-game")
             }
     }
 }

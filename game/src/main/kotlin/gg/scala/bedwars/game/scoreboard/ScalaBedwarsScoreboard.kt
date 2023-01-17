@@ -50,12 +50,12 @@ object ScalaBedwarsScoreboard : CgsGameScoreboardRenderer
         if (state == CgsGameState.WAITING || state == CgsGameState.STARTING)
         {
             lines.add(
-                "Map: ${CC.D_AQUA}${
-                    CgsGameEngine.INSTANCE.gameArena.getName()
+                "Map: ${CC.PRI}${
+                    CgsGameEngine.INSTANCE.gameArena!!.getName()
                 }"
             )
             lines.add(
-                "Players: ${CC.D_AQUA}${
+                "Players: ${CC.PRI}${
                     Bukkit.getOnlinePlayers().size
                 }/${
                     Bukkit.getMaxPlayers()
@@ -76,7 +76,7 @@ object ScalaBedwarsScoreboard : CgsGameScoreboardRenderer
 
             lines.add("")
             lines.add(
-                "Mode: ${CC.D_AQUA}${
+                "Mode: ${CC.PRI}${
                     CgsGameEngine.INSTANCE.gameMode.getName()
                 }"
             )
@@ -132,9 +132,9 @@ object ScalaBedwarsScoreboard : CgsGameScoreboardRenderer
             if (ScalaBedwarsGameEngine.INSTANCE.gameMode.getMaxTeams() <= 4)
             {
                 lines.add("")
-                lines.add("Kills: " + CC.D_AQUA + statistics.gameKills.value)
-                lines.add("Final Kills: " + CC.D_AQUA + statistics.gameFinalKills.value)
-                lines.add("Beds Broken: " + CC.D_AQUA + statistics.gameBedsBroken.value)
+                lines.add("Kills: " + CC.PRI + statistics.gameKills.value)
+                lines.add("Final Kills: " + CC.PRI + statistics.gameFinalKills.value)
+                lines.add("Beds Broken: " + CC.PRI + statistics.gameBedsBroken.value)
             }
         }
 

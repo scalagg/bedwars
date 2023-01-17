@@ -14,6 +14,7 @@ import gg.scala.bedwars.game.shop.categories.BedwarsShopUtilityCategory
 import gg.scala.bedwars.game.shop.npc.BedwarsShopNpcEntity
 import gg.scala.bedwars.game.shop.npc.BedwarsTeamUpgradesNpcEntity
 import gg.scala.bedwars.shared.BedwarsCgsInfo
+import gg.scala.bedwars.shared.arena.eight.TestTwoArena
 import gg.scala.cgs.common.CgsGameEngine
 import gg.scala.cgs.common.information.arena.CgsGameArenaHandler
 import gg.scala.cgs.common.information.mode.CgsGameMode
@@ -96,6 +97,9 @@ class ScalaBedwarsGame : ExtendedScalaPlugin()
         }
 
         EntityHandler.close()
+
+        engine.gameArena = TestTwoArena
+        CgsGameArenaHandler.arena = TestTwoArena
 
         CgsGameEngine.INSTANCE = engine
         engine.initialLoad()
