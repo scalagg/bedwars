@@ -11,6 +11,7 @@ import net.evilblock.cubed.menu.pagination.PaginatedMenu
 import net.evilblock.cubed.util.CC
 import net.evilblock.cubed.util.bukkit.ItemBuilder
 import org.bukkit.Material
+import org.bukkit.Sound
 import org.bukkit.entity.Player
 import org.bukkit.inventory.ItemFlag
 
@@ -152,6 +153,7 @@ class BedwarsShopMenu : PaginatedMenu()
                             player.sendMessage(
                                 "${CC.GREEN}You purchased ${CC.SEC}${item.name}${CC.GREEN}!"
                             )
+                            player.playSound(player.location, Sound.NOTE_PLING, 0.5F, 1.0F)
 
                             item.price.first.removeFrom
                                 .invoke(player, item.price.second)

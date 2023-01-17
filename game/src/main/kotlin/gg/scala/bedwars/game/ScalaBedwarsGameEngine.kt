@@ -66,8 +66,6 @@ class ScalaBedwarsGameEngine(
 
     override fun createTeam(id: Int): CgsGameTeam
     {
-        println(id)
-
         return BedwarsCgsGameTeam(id)
     }
 }
