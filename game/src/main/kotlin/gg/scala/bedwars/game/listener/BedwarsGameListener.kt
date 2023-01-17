@@ -313,18 +313,6 @@ object BedwarsGameListener : Listener
         }
     }
 
-    @EventHandler
-    fun onMove(event: PlayerMoveEvent)
-    {
-        if (event.to.y < 0)
-        {
-            if (!event.player.hasMetadata("respawning"))
-            {
-                onDeath(PlayerDeathEvent(event.player, event.player.inventory.contents.toList(), 0, null))
-            }
-        }
-    }
-
     @EventHandler(
         ignoreCancelled = true
     )
@@ -572,7 +560,7 @@ object BedwarsGameListener : Listener
     }
 
     @EventHandler
-    fun onDamage(event: PlayerBucketEvent)
+    fun onDamage(event: PlayerBucketEmptyEvent)
     {
         /* Remove empty bucket */
         Bukkit.getScheduler()
