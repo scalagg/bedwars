@@ -310,8 +310,6 @@ object BedwarsGameListener : Listener
         }
     }
 
-    private val lastUpdated = mutableMapOf<UUID, Long>()
-
     @EventHandler
     fun onMove(event: PlayerMoveEvent) {
         if (event.to.y < 0) {
@@ -330,22 +328,15 @@ object BedwarsGameListener : Listener
     {
         if (
             event.cause == EntityDamageEvent.DamageCause.VOID &&
-            event.entity is Player
+            event.entity is Player && !event.entity.hasMetadata("spectator")
         )
         {
             val player = event.entity as Player
-            val updated = lastUpdated[player.uniqueId]
-
-            if (
-                updated != null &&
-                System.currentTimeMillis() - updated < 100L
-            )
-            {
-                return
-            }
-
             player.health = 0.0
-            lastUpdated[player.uniqueId] = System.currentTimeMillis()
+
+            event.entity.setMetadata(
+                "spectator", FixedMetadataValue(plugin, true)
+            )
         }
     }
 
